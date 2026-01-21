@@ -1,0 +1,35 @@
+.horizontal-section {
+  height: 300vh;
+  view-timeline-name: --section;
+  view-timeline-axis: block;
+}
+
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.horizontal-track {
+  display: flex;
+  height: 100%;
+  animation: horizontal-scroll ease-in-out both;
+  animation-timeline: --section;
+  animation-range: contain 0% contain 100%;
+}
+
+.panel {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+@keyframes horizontal-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--translateX));
+  }
+}

@@ -2,25 +2,66 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  --primary: #b0c9e6;
+  --secondary: #f2f1dc;
 }
 
-@theme inline {
-  --color-background: var(--background);
+@theme {
+  --font-sans: var(--font-principal);
+  --font-display: var(--font-secundaria);
+
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .font-sans {
+    font-family: var(--font-principal);
+  }
+  .font-display {
+    font-family: var(--font-secundaria);
   }
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-principal);
+}
+
+.clip-aside {
+  clip-path: polygon(
+    0 0,
+    /* esquina superior izquierda */ calc(100% - 140px) 0,
+    /* arriba derecho inclinado */ 100% 95%,
+    /* arriba derecha hacia afuera */ 100% calc(100% - 140px),
+    /* derecha inclinada */ calc(100% - 0px) 95%,
+    /* esquina inferior inclinada */ 0% 100% /* esquina inferior izquierda */
+  );
+}
+
+.clip-aside-info {
+  clip-path: polygon(
+    0 0,
+    /* esquina superior izquierda */ calc(100% - 140px) 0,
+    /* arriba derecho inclinado */ 100% 91%,
+    /* arriba derecha hacia afuera */ 100% calc(100% - 140px),
+    /* derecha inclinada */ calc(100% - 0px) 91%,
+    /* esquina inferior inclinada */ 0% 100% /* esquina inferior izquierda */
+  );
+}
+
+.fade-in {
+  animation: fade-in ease-in-out both;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
