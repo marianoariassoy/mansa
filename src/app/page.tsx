@@ -59,6 +59,7 @@ export default function Home() {
       slug: "tira-3",
     },
   ];
+
   return (
     <main>
       <div className="top-1/2 right-8 -traslate-y-1/2 z-50 hidden lg:fixed">

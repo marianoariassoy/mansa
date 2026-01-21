@@ -1,7 +1,6 @@
-"use client";
 import Image from "next/image";
-import { Forward } from "@/lib/icons";
 import FooterPortfolio from "@/components/FooterPortfolio";
+import GoDown from "@/components/GoDown";
 
 export const metadata = {
   title: "Info",
@@ -23,29 +22,10 @@ const page = () => {
     },
   ];
 
-  const goDown = () => {
-    const element = document.querySelector("#second-page");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <section>
       <div className="h-screen w-screen relative">
-        <div className="absolute bottom-8 right-8">
-          <button
-            className="flex items-start gap-x-4 cursor-pointer"
-            onClick={goDown}
-          >
-            <span className="text-3xl lg:text-4xl hover:underline">
-              Detalle
-            </span>
-            <span className="rotate-90">
-              <Forward />
-            </span>
-          </button>
-        </div>
+        <GoDown />
 
         <Image
           src="/images/info-image.jpg"
