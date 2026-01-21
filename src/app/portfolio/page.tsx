@@ -2,6 +2,10 @@ import Card from "@/components/Card";
 import FooterPortfolio from "@/components/FooterPortfolio";
 import HeaderPortfolio from "@/components/HeaderPortfolio";
 
+export const metadata = {
+  title: "Portfolio",
+};
+
 const page = () => {
   const data = [
     {

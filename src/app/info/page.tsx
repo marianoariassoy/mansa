@@ -3,6 +3,10 @@ import Image from "next/image";
 import { Forward } from "@/lib/icons";
 import FooterPortfolio from "@/components/FooterPortfolio";
 
+export const metadata = {
+  title: "Info",
+};
+
 const page = () => {
   const images = [
     {
