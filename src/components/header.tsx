@@ -21,6 +21,22 @@ const header = () => {
     setUrlBase(base);
   }, [pathname]);
 
+  useEffect(() => {
+    const updateRotation = () => {
+      const vh = window.innerHeight;
+      const rotation = vh * 0.005; // ajustá el factor
+      document.documentElement.style.setProperty(
+        "--rotate-deg",
+        `${rotation}deg`,
+      );
+      console.log(rotation);
+    };
+
+    updateRotation();
+    window.addEventListener("resize", updateRotation);
+    return () => window.removeEventListener("resize", updateRotation);
+  }, []);
+
   return (
     <header id="top-page">
       <HamburgerButton
@@ -48,6 +64,7 @@ const header = () => {
             ))}
           </ul>
         </nav>
+
         <Mansa />
       </aside>
 

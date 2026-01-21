@@ -7,7 +7,7 @@ const Mansa = () => {
         <img
           src="/assets/logo.svg"
           alt="Logo Mansa"
-          className="h-8 lg:h-10 -rotate-7 lg:-rotate-6 hover:-rotate-10 transition-transform"
+          className="h-8 lg:h-10 -rotate-(--rotate-deg) lg:-rotate-6 hover:-rotate-10 transition-transform"
         />
       </Link>
     </div>
