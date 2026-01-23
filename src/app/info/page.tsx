@@ -1,26 +1,18 @@
 import Image from "next/image";
 import FooterPortfolio from "@/components/FooterPortfolio";
 import GoDown from "@/components/GoDown";
+import { Info } from "@/types";
 
 export const metadata = {
   title: "Info",
 };
 
-const page = () => {
-  const images = [
-    {
-      src: "/temp/12.jpg",
-      alt: "Imagen 2",
-    },
-    {
-      src: "/temp/4.jpg",
-      alt: "Imagen 2",
-    },
-    {
-      src: "/temp/8.jpg",
-      alt: "Imagen 8",
-    },
-  ];
+const Page = async () => {
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/info", {
+    cache: "no-store",
+  });
+  const data = (await response.json()) as Info;
+  if (!data) return;
 
   return (
     <section>
@@ -28,7 +20,7 @@ const page = () => {
         <GoDown />
 
         <Image
-          src="/images/info-image.jpg"
+          src={data.image}
           width={1420}
           height={1280}
           className="w-full h-full object-center object-cover"
@@ -41,33 +33,8 @@ const page = () => {
       >
         <div>
           <h2 className="text-3xl lg:text-5xl mb-10">Info</h2>
-          <p className="text-xl leading-tight">
-            Mansa es un taller de diseño y fabricación que trabaja en la
-            intersección entre idea, técnica y materia. Su práctica se
-            estructura en tres líneas principales.
-            <br />
-            <br />
-            —Proyecto y diseño a clientes directos. El taller acompaña a quienes
-            aún no tienen definido su proyecto, ofreciendo un desarrollo
-            integral que abarca ideas iniciales, dirección técnica, elabora-
-            ción de planos y resolución formal. El proceso combina observación,
-            criterio y oficio para transformar necesidades y deseos en piezas
-            claras, precisas y realizables.
-            <br />
-            <br />
-            —Resolución técnica de mobiliario y equipamiento. El trabajo se
-            sostiene en un enfoque riguroso que articula pensamiento técnico,
-            conocimiento constructivo y experiencia material. Desde detalles
-            comple- jos hasta sistemas completos, el proceso integra dibujo,
-            prototipado y ajustes finos para garantizar estabilidad, durabilidad
-            y calidad en cada pieza.
-            <br />
-            <br />
-            —Realización para estudios de arquitectura e interiorismo. Mansa
-            colabora con estudios en la materialización de sus proyectos, tradu-
-            ciendo la intención proyectual en soluciones viables y construibles.
-            La fabricación se realiza con precisión y coherencia, cuidando tanto
-            la lectura técnica como la expresión material del diseño original.
+          <p className="text-xl leading-tight whitespace-break-spaces">
+            {data.text_2}
           </p>
         </div>
         <div>
@@ -93,18 +60,18 @@ const page = () => {
         </div>
       </div>
       <div className="flex flex-col gap-y-4 px-4 lg:px-8 pb-8">
-        {images.map((item, index) => {
+        {data.images.map((item, index) => {
           const position = index % 4;
 
           if (position === 2 || position === 3) {
             return (
               <div
-                key={index}
+                key={item.id}
                 className="w-full h-full aspect-square lg:aspect-video"
               >
                 <Image
                   src={item.src}
-                  alt={item.alt}
+                  alt={data.title}
                   width={1420}
                   height={1280}
                   className="w-full h-full object-cover object-center"
@@ -114,7 +81,7 @@ const page = () => {
           }
 
           if (position === 0) {
-            const second = images[index + 1];
+            const second = data.images[index + 1];
             if (!second) return null;
 
             return (
@@ -122,7 +89,7 @@ const page = () => {
                 <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
                   <Image
                     src={item.src}
-                    alt={item.alt}
+                    alt={data.title}
                     width={710}
                     height={640}
                     className="w-full h-full object-center object-cover"
@@ -131,7 +98,7 @@ const page = () => {
                 <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
                   <Image
                     src={second.src}
-                    alt={second.alt}
+                    alt={data.title}
                     width={710}
                     height={640}
                     className="w-full h-full object-center object-cover"
@@ -151,4 +118,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

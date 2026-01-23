@@ -33,3 +33,14 @@
     transform: translateX(var(--translateX));
   }
 }
+
+@media (max-width: 768px) {
+  .horizontal-section {
+    height: auto;
+  }
+
+  .horizontal-track {
+    animation: none;
+    flex-direction: column;
+  }
+}

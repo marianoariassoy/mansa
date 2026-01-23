@@ -45,7 +45,7 @@ const header = () => {
       />
 
       <aside
-        className={`fixed top-0 left-0 h-screen w-full lg:w-90 bg-primary clip-aside px-4 py-8 lg:px-8 z-50 transition-transform duration-200 ease-in-out flex flex-col justify-between delay-300 ${
+        className={`fixed top-0 left-0 h-screen w-[86vw] lg:w-90 bg-primary clip-aside px-4 py-8 lg:px-8 z-50 transition-transform duration-200 ease-in-out flex flex-col justify-between delay-300 ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         id="aside-main"

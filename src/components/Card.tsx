@@ -1,16 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Project } from "@/types";
 
-interface CardProps {
-  data: {
-    title: string;
-    year: string;
-    image: string;
-    slug: string;
-  };
-}
-
-const Card = ({ data }: CardProps) => {
+const Card = ({ data }: { data: Project }) => {
   return (
     <article className="flex flex-col gap-y-4">
       <Link href={`/portfolio/${data.slug}`} className="block h-full w-full">

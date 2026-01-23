@@ -1,50 +1,18 @@
 import Card from "@/components/Card";
 import FooterPortfolio from "@/components/FooterPortfolio";
 import HeaderPortfolio from "@/components/HeaderPortfolio";
+import { Project } from "@/types";
 
 export const metadata = {
   title: "Portfolio",
 };
 
-const page = () => {
-  const data = [
-    {
-      title: "Revolver",
-      year: "2025",
-      image: "/temp/2.jpg",
-      slug: "revolver",
-    },
-    {
-      title: "Ora",
-      year: "2025",
-      image: "/temp/1.jpg",
-      slug: "ora",
-    },
-    {
-      title: "OTORO",
-      year: "2025",
-      image: "/temp/3.jpg",
-      slug: "tira-3",
-    },
-    {
-      title: "Revolver",
-      year: "2025",
-      image: "/temp/2.jpg",
-      slug: "revolver",
-    },
-    {
-      title: "Ora",
-      year: "2025",
-      image: "/temp/1.jpg",
-      slug: "ora",
-    },
-    {
-      title: "OTORO",
-      year: "2025",
-      image: "/temp/3.jpg",
-      slug: "tira-3",
-    },
-  ];
+const Page = async () => {
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects", {
+    cache: "no-store",
+  });
+  const data = (await response.json()) as Project[];
+  if (!data) return;
 
   return (
     <section>
@@ -68,8 +36,8 @@ const page = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-10 mb-8">
-          {data.map((item, index) => (
-            <Card key={index} data={item} />
+          {data.map((item) => (
+            <Card key={item.id} data={item} />
           ))}
         </div>
 
@@ -79,4 +47,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

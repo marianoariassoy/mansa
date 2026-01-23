@@ -6,7 +6,7 @@ export const nav = [
     href: "/info",
   },
   {
-    name: "Portofolio",
+    name: "Portfolio",
     href: "/portfolio",
   },
   {

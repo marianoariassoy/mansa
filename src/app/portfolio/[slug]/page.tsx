@@ -1,47 +1,34 @@
 import Image from "next/image";
 import FooterPortfolio from "@/components/FooterPortfolio";
 import HeaderPortfolio from "@/components/HeaderPortfolio";
+import { Project } from "@/types";
 
-const page = () => {
-  const data = {
-    title: "Revolver",
-    images: [
-      {
-        src: "/temp/2.jpg",
-        alt: "Imagen 2",
-      },
-      {
-        src: "/temp/1.jpg",
-        alt: "Imagen 1",
-      },
-      {
-        src: "/temp/3.jpg",
-        alt: "Imagen 3",
-      },
-      {
-        src: "/temp/2.jpg",
-        alt: "Imagen 5",
-      },
-      {
-        src: "/temp/3.jpg",
-        alt: "Imagen 3",
-      },
-    ],
-    slug: "revolver",
-  };
+async function getServerSideProps(slug: string) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/projects/${slug}`,
+  );
+  const data = await response.json();
+  if (!data) return null;
+  return data;
+}
+
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
+  const data = (await getServerSideProps(slug)) as Project;
+  if (!data) return null;
 
   return (
     <section>
       <div className="px-4 lg:px-8 py-10 mx-auto max-w-8xl flex flex-col gap-y-16">
         <HeaderPortfolio />
         <div>
-          <h1 className="text-3xl lg:text-5xl">Proyecto — Revolver</h1>
+          <h1 className="text-3xl lg:text-5xl">Proyecto — {data.title}</h1>
         </div>
-        <div className="font-display uppercase lg:text-lg leading-snug">
-          AÑO. 2025 <br />
-          PAÍS. ARGENTINA <br />
-          CIUDAD. BUENOS AIRES <br />
-          FOTOS. LOREM IPSU <br />
+        <div className="font-display uppercase lg:text-lg leading-snug flex flex-col">
+          {data.year && <span>AÑO. {data.year}</span>}
+          {data.city && <span>CIUDAD. {data.city}</span>}
+          {data.country && <span>PAÍS. {data.country}</span>}
+          {data.ph && <span>FOTOS. {data.ph}</span>}
         </div>
         <div className="mt-8 flex flex-col gap-y-4">
           {data.images.map((item, index) => {
@@ -51,12 +38,12 @@ const page = () => {
             if (position === 0 || position === 3) {
               return (
                 <div
-                  key={index}
+                  key={item.id}
                   className="w-full aspect-square lg:aspect-video"
                 >
                   <Image
                     src={item.src}
-                    alt={item.alt}
+                    alt={data.title}
                     width={1420}
                     height={1280}
                     className="w-full h-full object-cover object-center"
@@ -71,11 +58,11 @@ const page = () => {
               if (!second) return null;
 
               return (
-                <div key={index} className="flex gap-x-4">
+                <div key={item.id} className="flex gap-x-4">
                   <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
                     <Image
                       src={item.src}
-                      alt={item.alt}
+                      alt={data.title}
                       width={710}
                       height={640}
                       className="w-full h-full object-center object-cover"
@@ -85,7 +72,7 @@ const page = () => {
                   <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
                     <Image
                       src={second.src}
-                      alt={second.alt}
+                      alt={data.title}
                       width={710}
                       height={640}
                       className="w-full h-full object-center object-cover"
@@ -105,4 +92,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
