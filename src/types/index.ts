@@ -9,6 +9,7 @@ export interface Project {
   ph?: string;
   images: {
     id: number;
+    portrait: boolean;
     src: string;
   }[];
 }

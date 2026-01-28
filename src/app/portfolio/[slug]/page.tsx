@@ -39,7 +39,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               return (
                 <div
                   key={item.id}
-                  className="w-full aspect-square lg:aspect-video"
+                  className="w-full h-full aspect-square lg:aspect-video overflow-hidden"
                 >
                   <Image
                     src={item.src}
@@ -59,7 +59,9 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
               return (
                 <div key={item.id} className="flex gap-x-4">
-                  <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
+                  <div
+                    className={`w-1/2 aspect-9/16 ${item.portrait ? "lg:aspect-5/7" : "lg:aspect-7/5"}`}
+                  >
                     <Image
                       src={item.src}
                       alt={data.title}
@@ -68,8 +70,9 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                       className="w-full h-full object-center object-cover"
                     />
                   </div>
-
-                  <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
+                  <div
+                    className={`w-1/2 aspect-9/16 ${item.portrait ? "lg:aspect-5/7" : "lg:aspect-7/5"}`}
+                  >
                     <Image
                       src={second.src}
                       alt={data.title}

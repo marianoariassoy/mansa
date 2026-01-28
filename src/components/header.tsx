@@ -55,7 +55,7 @@ const header = () => {
             {nav.map((item) => (
               <li key={item.name}>
                 <Link
-                  className={` ${urlBase === item.href ? "underline" : "hover:underline"}`}
+                  className={`${urlBase === item.href ? "underline" : "hover:underline"}`}
                   href={item.href}
                 >
                   {item.name}

@@ -12,13 +12,12 @@ export const metadata: Metadata = {
   description:
     "Mansa es un taller de diseño y fabricación que trabaja en la intersección entre idea, técnica y materia. Su práctica se estructura en tres líneas principales.",
   icons: {
-    icon: "",
+    icon: "#",
   },
   generator: "marianoarias.soy",
   openGraph: {
     type: "website",
     locale: "es_AR",
-    url: "",
     title: "Mansa",
     description:
       "Mansa es un taller de diseño y fabricación que trabaja en la intersección entre idea, técnica y materia. Su práctica se estructura en tres líneas principales.",

@@ -24,7 +24,7 @@ const FooterPortfolio = () => {
       </div>
       <div>
         <a
-          href="http://"
+          href="http://instagram.com/mansa_estudio"
           target="_blank"
           className="text-lg font-display hover:underline"
           rel="noopener noreferrer"
