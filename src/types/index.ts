@@ -10,6 +10,7 @@ export interface Project {
   images: {
     id: number;
     portrait: boolean;
+    width: boolean;
     src: string;
   }[];
 }

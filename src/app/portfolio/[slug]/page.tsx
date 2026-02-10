@@ -17,6 +17,8 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const data = (await getServerSideProps(slug)) as Project;
   if (!data) return null;
 
+  console.log(data);
+
   return (
     <section>
       <div className="px-4 lg:px-8 py-10 mx-auto max-w-8xl flex flex-col gap-y-16">
@@ -31,36 +33,38 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           {data.ph && <span>FOTOS. {data.ph}</span>}
         </div>
         <div className="mt-8 flex flex-col gap-y-4">
-          {data.images.map((item, index) => {
-            const position = index % 4;
+          {(() => {
+            const elements = [];
+            for (let i = 0; i < data.images.length; i++) {
+              const item = data.images[i];
 
-            // Imagen 1 y 4 → 100%
-            if (position === 0 || position === 3) {
-              return (
-                <div
-                  key={item.id}
-                  className="w-full h-full aspect-square lg:aspect-video overflow-hidden"
-                >
-                  <Image
-                    src={item.src}
-                    alt={data.title}
-                    width={1420}
-                    height={1280}
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
-              );
-            }
+              // 100% width
+              if (!item.width) {
+                elements.push(
+                  <div
+                    key={item.id}
+                    className="w-full h-full aspect-square lg:aspect-video overflow-hidden"
+                  >
+                    <Image
+                      src={item.src}
+                      alt={data.title}
+                      width={1420}
+                      height={1280}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>,
+                );
+                continue;
+              }
 
-            // Imagen 2 y 3 → 50% / 50%
-            if (position === 1) {
-              const second = data.images[index + 1];
-              if (!second) return null;
+              // 50% width → toma dos imágenes
+              const second = data.images[i + 1];
+              if (!second) break;
 
-              return (
+              elements.push(
                 <div key={item.id} className="flex gap-x-4">
                   <div
-                    className={`w-1/2 aspect-9/16 ${item.portrait ? "lg:aspect-5/7" : "lg:aspect-7/5"}`}
+                    className={`w-1/2 overflow-hidden aspect-9/16 ${item.portrait ? "lg:aspect-5/7" : "lg:aspect-7/5"}`}
                   >
                     <Image
                       src={item.src}
@@ -70,8 +74,9 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                       className="w-full h-full object-center object-cover"
                     />
                   </div>
+
                   <div
-                    className={`w-1/2 aspect-9/16 ${item.portrait ? "lg:aspect-5/7" : "lg:aspect-7/5"}`}
+                    className={`w-1/2 aspect-9/16 ${second.portrait ? "lg:aspect-5/7" : "lg:aspect-7/5"}`}
                   >
                     <Image
                       src={second.src}
@@ -81,12 +86,15 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                       className="w-full h-full object-center object-cover"
                     />
                   </div>
-                </div>
+                </div>,
               );
+
+              // 🔥 saltar el siguiente porque ya se usó
+              i++;
             }
-            // position === 2 no renderiza nada (ya se usó arriba)
-            return null;
-          })}
+
+            return elements;
+          })()}
         </div>
 
         <FooterPortfolio />
