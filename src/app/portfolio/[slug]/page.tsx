@@ -17,8 +17,6 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const data = (await getServerSideProps(slug)) as Project;
   if (!data) return null;
 
-  console.log(data);
-
   return (
     <section>
       <div className="px-4 lg:px-8 py-10 mx-auto max-w-8xl flex flex-col gap-y-16">

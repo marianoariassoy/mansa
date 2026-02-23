@@ -1,9 +1,13 @@
+/* CONTENEDOR DE CADA FILA */
 .horizontal-section {
-  height: 300vh;
+  /* más recorrido vertical = movimiento horizontal más suave */
+  /* height: 340vh; */
+
   view-timeline-name: --section;
   view-timeline-axis: block;
 }
 
+/* WRAPPER STICKY */
 .sticky-wrapper {
   position: sticky;
   top: 0;
@@ -11,29 +15,63 @@
   overflow: hidden;
 }
 
+/* TRACK HORIZONTAL */
 .horizontal-track {
   display: flex;
   height: 100%;
-  animation: horizontal-scroll ease-in-out both;
+
+  /* easing mucho más suave que ease-in-out */
+  animation: horizontal-scroll cubic-bezier(0.22, 1, 0.36, 1) both;
+
   animation-timeline: --section;
-  animation-range: contain 0% contain 100%;
+
+  /* zona de descanso al inicio y al final (clave anti-mareo) */
+  animation-range: contain 5% contain 95%;
+
+  /* optimización de render */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
+/* PANELES */
 .panel {
   width: 100vw;
   height: 100vh;
   flex-shrink: 0;
 }
 
+/* KEYFRAMES */
 @keyframes horizontal-scroll {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(var(--translateX));
+    /* IMPORTANTE:
+       para 3 columnas → mover solo 200vw
+       (antes probablemente estabas moviendo demasiado) */
+    transform: translate3d(var(--translateX, -200vw), 0, 0);
   }
 }
 
+/* ===== SUAVIZADO VISUAL OPCIONAL (muy recomendado) ===== */
+.sticky-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* viñeta suave para reducir fatiga visual */
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.12),
+    transparent 18%,
+    transparent 82%,
+    rgba(0, 0, 0, 0.12)
+  );
+}
+
+/* ===== MOBILE ===== */
 @media (max-width: 768px) {
   .horizontal-section {
     height: auto;
@@ -42,5 +80,25 @@
   .horizontal-track {
     animation: none;
     flex-direction: column;
+    will-change: auto;
+    transform: none;
+  }
+
+  .sticky-wrapper::after {
+    display: none;
+  }
+}
+
+/* ===== ACCESIBILIDAD (MUY PRO) ===== */
+@media (prefers-reduced-motion: reduce) {
+  .horizontal-track {
+    animation: none;
+    flex-direction: column;
+    will-change: auto;
+    transform: none;
+  }
+
+  .sticky-wrapper::after {
+    display: none;
   }
 }
