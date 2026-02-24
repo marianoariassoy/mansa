@@ -1,13 +1,14 @@
-/* CONTENEDOR DE CADA FILA */
+/* ================================
+   CONTENEDOR DE CADA FILA
+================================ */
 .horizontal-section {
-  /* más recorrido vertical = movimiento horizontal más suave */
-  /* height: 340vh; */
-
-  view-timeline-name: --section;
-  view-timeline-axis: block;
+  /* la altura sigue viniendo inline desde React */
+  position: relative;
 }
 
-/* WRAPPER STICKY */
+/* ================================
+   WRAPPER STICKY
+================================ */
 .sticky-wrapper {
   position: sticky;
   top: 0;
@@ -15,53 +16,37 @@
   overflow: hidden;
 }
 
-/* TRACK HORIZONTAL */
+/* ================================
+   TRACK HORIZONTAL (controlado por JS)
+================================ */
 .horizontal-track {
   display: flex;
   height: 100%;
 
-  /* easing mucho más suave que ease-in-out */
-  animation: horizontal-scroll cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  animation-timeline: --section;
-
-  /* zona de descanso al inicio y al final (clave anti-mareo) */
-  animation-range: contain 5% contain 95%;
-
   /* optimización de render */
   will-change: transform;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
 }
 
-/* PANELES */
+/* ================================
+   PANELES
+================================ */
 .panel {
   width: 100vw;
   height: 100vh;
   flex-shrink: 0;
 }
 
-/* KEYFRAMES */
-@keyframes horizontal-scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    /* IMPORTANTE:
-       para 3 columnas → mover solo 200vw
-       (antes probablemente estabas moviendo demasiado) */
-    transform: translate3d(var(--translateX, -200vw), 0, 0);
-  }
-}
-
-/* ===== SUAVIZADO VISUAL OPCIONAL (muy recomendado) ===== */
+/* ================================
+   VIÑETA SUAVE (ANTI FATIGA)
+================================ */
 .sticky-wrapper::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
 
-  /* viñeta suave para reducir fatiga visual */
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.12),
@@ -71,17 +56,29 @@
   );
 }
 
-/* ===== MOBILE ===== */
+/* ================================
+   MOBILE
+================================ */
 @media (max-width: 768px) {
   .horizontal-section {
+    height: auto !important;
+  }
+
+  .sticky-wrapper {
+    position: relative;
     height: auto;
+    overflow: visible;
   }
 
   .horizontal-track {
-    animation: none;
     flex-direction: column;
+    transform: none !important;
     will-change: auto;
-    transform: none;
+  }
+
+  .panel {
+    width: 100%;
+    height: auto;
   }
 
   .sticky-wrapper::after {
@@ -89,13 +86,19 @@
   }
 }
 
-/* ===== ACCESIBILIDAD (MUY PRO) ===== */
+/* ================================
+   ACCESIBILIDAD
+================================ */
 @media (prefers-reduced-motion: reduce) {
   .horizontal-track {
-    animation: none;
-    flex-direction: column;
+    transform: none !important;
     will-change: auto;
-    transform: none;
+  }
+
+  .sticky-wrapper {
+    position: relative;
+    height: auto;
+    overflow: visible;
   }
 
   .sticky-wrapper::after {
