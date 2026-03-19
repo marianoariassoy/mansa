@@ -12,13 +12,20 @@ const header = () => {
   const [urlBase, setUrlBase] = useState("/");
 
   useEffect(() => {
-    if (pathname === "/") {
-      setMenuOpen(true);
-    } else {
-      setMenuOpen(false);
-    }
-    const base = pathname.split("/").slice(0, 2).join("/");
-    setUrlBase(base);
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 1024;
+
+      if (pathname === "/" && !isMobile) {
+        setMenuOpen(true);
+      } else {
+        setMenuOpen(false);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [pathname]);
 
   useEffect(() => {
