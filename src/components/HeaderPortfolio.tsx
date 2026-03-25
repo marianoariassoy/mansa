@@ -3,7 +3,7 @@ import Link from "next/link";
 const HeaderPortfolio = () => {
   return (
     <div>
-      <Link href="/">
+      <Link href="/" className="hidden lg:block">
         <img
           src="/assets/logo.svg"
           className="h-6 hover:opacity-80 transition-opacity"

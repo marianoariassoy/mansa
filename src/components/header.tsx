@@ -46,6 +46,12 @@ const header = () => {
 
   return (
     <header id="top-page">
+      <div className="fixed top-10 left-4 lg:left-8 z-20 lg:hidden">
+        <Link href="/">
+          <img src="/assets/logo.svg" className="h-5" alt="Logo Mansa" />
+        </Link>
+      </div>
+
       <HamburgerButton
         isOpen={menuOpen}
         onClick={() => setMenuOpen(!menuOpen)}

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Contacto } from "@/types";
 
 export const metadata = {
@@ -15,10 +14,8 @@ const Page = async () => {
   return (
     <section>
       <div className="h-screen w-screen relative">
-        <Image
+        <img
           src={data.image}
-          width={1420}
-          height={1280}
           className="w-full h-full object-center object-cover"
           alt="Imagen Contacto"
         />

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import FooterPortfolio from "@/components/FooterPortfolio";
 import GoDown from "@/components/GoDown";
 import { Info } from "@/types";
@@ -18,11 +17,8 @@ const Page = async () => {
     <section>
       <div className="h-screen w-screen relative">
         <GoDown />
-
-        <Image
+        <img
           src={data.image}
-          width={1420}
-          height={1280}
           className="w-full h-full object-center object-cover"
           alt="Imagen Info"
         />
@@ -69,11 +65,9 @@ const Page = async () => {
                 key={item.id}
                 className="w-full h-full aspect-square lg:aspect-video"
               >
-                <Image
+                <img
                   src={item.src}
                   alt={data.title}
-                  width={1420}
-                  height={1280}
                   className="w-full h-full object-cover object-center"
                 />
               </div>
@@ -87,20 +81,16 @@ const Page = async () => {
             return (
               <div key={index} className="flex gap-x-4">
                 <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
-                  <Image
+                  <img
                     src={item.src}
                     alt={data.title}
-                    width={710}
-                    height={640}
                     className="w-full h-full object-center object-cover"
                   />
                 </div>
                 <div className="w-1/2 aspect-9/16 lg:aspect-5/7">
-                  <Image
+                  <img
                     src={second.src}
                     alt={data.title}
-                    width={710}
-                    height={640}
                     className="w-full h-full object-center object-cover"
                   />
                 </div>
